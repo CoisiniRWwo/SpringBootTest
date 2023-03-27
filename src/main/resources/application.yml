@@ -1,0 +1,60 @@
+spring:
+  profiles:
+    active: dev
+
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+  banner:
+    location: FoZu.txt
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/springboot?serverTimezone=UTC&useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: '010111'
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+    druid:
+      aop-patterns: com.shf.boot.*  #监控SpringBean
+      filters: stat,wall,slf4j  # 底层开启功能，stat（sql监控），wall（防火墙）
+
+      stat-view-servlet:    # 配置监控页功能
+        enabled: true
+        login-username: admin
+        login-password: admin
+        reset-enable: false
+
+      web-stat-filter:     # 监控web
+        enabled: true
+        url-pattern: /*
+        exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+
+      filter:    # 对上面filters里面的stat的详细配置
+        stat:
+          slow-sql-millis: 1000
+          log-slow-sql: true
+          enabled: true
+        wall:
+          enabled: true
+          config:
+            drop-table-allow: false
+#  redis:
+#    url: redis://:Testtest1@r-bp1697dmb52pweosj6pd.redis.rds.aliyuncs.com:6379
+    #去掉用户名才行-> 正确格式是：redis :// [: password@] host [: port] [/ database][? [timeout=timeout[d|h|m|s|m……
+#    host: r-bp1697dmb52pweosj6pd.redis.rds.aliyuncs.com
+#    port: 6379
+#    password:  shf:Shf010111
+#    client-type: jedis
+
+# 配置mybatis规则
+mybatis:
+#  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    lazy-loading-enabled: true
+    aggressive-lazy-loading: false
+
+
